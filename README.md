@@ -22,7 +22,7 @@ The dependencies can be installed using the requirements file:
 pip install -r requirements.txt
 ```
 
-It is also necessary to install TRH. It can be obtained from the following link: https://github.com/GDATASoftwareAG/TypeRefHasher/releases
+It is also necessary to download <code>trh</code> file -> Linux x64 (Standalone binary). It can be obtained from the following link: https://github.com/GDATASoftwareAG/TypeRefHasher/releases
 
 # files
 The files that you can find in the repository are the following:
