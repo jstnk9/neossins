@@ -85,6 +85,7 @@ Launch the application and check the similarities that the network shows if they
 Once finished, enrich the database with the three samples by placing them in the "to_save_directory" directory within the configuration file and launch the "save.py -f family_name" script to store them.
 
 # Screenshots
+![alt text](https://github.com/jstnk9/neossins/blob/main/images/graph.png?raw=true)
 
 # Version
 0.1 alfa version
