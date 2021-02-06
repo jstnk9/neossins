@@ -15,7 +15,6 @@ I recommend creating a virtual environment with virtualenv to install the projec
 virtualenv <project_name>
 
 source <project_name/bin/activate
-
 ```
 
 The dependencies can be installed using the requirements file:
