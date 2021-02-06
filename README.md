@@ -1,8 +1,9 @@
 # Neossins
 Neossins is an application based on TypeRef Hasher that belongs to G Data Cyberdefense. Only works with malware samples compiled in .NET.
 
-Explanation: http://myblog
+This project aims to identify similarity between malware samples stored in the database. It is important to enrich the database with as many samples as possible to obtain better results.
 
+Explanation: http://myblog
 
 TypeRef Hasher tool: hxxps://github.com/GDATASoftwareAG/TypeRefHasher
 
@@ -39,7 +40,7 @@ The files that you can find in the repository are the following:
 
 <code>Directory malware</code> Contains malware samples. DO NOT RUN IN UNCONTROLLED ENVIRONMENTS.
 
-<code>Directory add_data<code> Has a script for storing data in the database.
+<code>Directory to_save</code> Has a script for storing data in the database. You need to put the malware that you want save in this directory.
 
 
 # Usage
@@ -51,12 +52,10 @@ Example config.ini
 [directory]
 malware_directory = /opt/neossins/malware
 trh_directory = /opt/trh/TypeRefHasher/trh
+to_save_directory = /opt/neossins/to_save
 
 [database]
 database_directory = /opt/neossins/data.sqlite
-
-[save]
-csv_file = /opt/neossins/add_data.csv
 
 [server]
 ip = 0.0.0.0
@@ -71,9 +70,20 @@ python neossins.py
 ```
 Open a web browser and go to http://<configured_ip>:8050/. 
 
+3. if you want to store malware samples together with their HRT in the database, put the samples in the to_save directory and run the script with the -f parameter indicating the name of the family the samples belong to.
+```
+python save.py -f asyncrat
+```
+
 # Examples
 <h3>Scenario</h3>
+Imagine you have to fulfill an intelligence requirement to identify if three samples have any similarity with those already stored in your organization.
 
+Place the malware in the directory set in "malware_directory" within the configuration file.
+
+Launch the application and check the similarities that the network shows if they exist.
+
+Once finished, enrich the database with the three samples by placing them in the "to_save_directory" directory within the configuration file and launch the "save.py -f family_name" script to store them.
 
 # Screenshots
 
