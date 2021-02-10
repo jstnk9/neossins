@@ -3,7 +3,7 @@ Neossins is an application based on TypeRef Hasher that belongs to G Data Cyberd
 
 This project aims to identify similarity between malware samples stored in the database. It is important to enrich the database with as many samples as possible to obtain better results.
 
-Explanation: http://myblog
+Explanation: https://joseliyo-jstnk.medium.com/typeref-hasher-the-imphash-solution-for-samples-in-net-9aad14502bbf
 
 TypeRef Hasher tool: hxxps://github.com/GDATASoftwareAG/TypeRefHasher
 
@@ -91,5 +91,5 @@ Once finished, enrich the database with the three samples by placing them in the
 0.1 alfa version
 
 # Thanks
-Thanks to https://github.com/GDATASoftwareAG and https://github.com/secana/
+Thanks to https://github.com/GDATASoftwareAG
 
