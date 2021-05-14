@@ -25,6 +25,7 @@ def get_info():
 			data_dic["detection"] = args.family
 			conect = create_connection()
 			save_data(conect, data_dic)
+			conect.commit()
 
 def create_connection():
 	conn = None
