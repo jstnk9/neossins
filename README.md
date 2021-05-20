@@ -1,11 +1,12 @@
 # Neossins
-Neossins is an application based on TypeRef Hasher that belongs to G Data Cyberdefense. Only works with malware samples compiled in .NET.
+Neossins is an application based on TypeRef Hasher that belongs to G Data Cyberdefense and on GetNETGUIDs that belongs to Cylance. Only works with malware samples compiled in .NET.
 
 This project aims to identify similarity between malware samples stored in the database. It is important to enrich the database with as many samples as possible to obtain better results.
 
 Explanation: https://joseliyo-jstnk.medium.com/typeref-hasher-the-imphash-solution-for-samples-in-net-9aad14502bbf
 
 TypeRef Hasher tool: hxxps://github.com/GDATASoftwareAG/TypeRefHasher
+GetNETGUIDs tool: https://github.com/cylance/GetNETGUIDs
 
 # Installation
 This tool is developed in Python3.

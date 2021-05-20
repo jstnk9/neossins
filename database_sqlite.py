@@ -17,11 +17,18 @@ def create_connection():
 
 	return conn
 
-def select_trh(conn, trh):
+def select_trh(conn, search_key):
 	# Get information when match trh
 	cur = conn.cursor()
-	cur.execute("SELECT sha256,detection FROM data WHERE typeRefHash =?", (trh,))
+	cur.execute("SELECT sha256,detection FROM data WHERE typeRefHash =?", (search_key,))
 	rows = cur.fetchall()
 
 	return rows
 
+def select_guid(conn, search_key):
+	# Get information when match trh
+	cur = conn.cursor()
+	cur.execute("SELECT sha256,detection FROM data WHERE guid =?", (search_key,))
+	rows = cur.fetchall()
+
+	return rows
