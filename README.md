@@ -40,7 +40,7 @@ The files that you can find in the repository are the following:
 
 <code>Directory malware</code> Contains malware samples. DO NOT RUN IN UNCONTROLLED ENVIRONMENTS.
 
-<code>Directory to_save</code> Has a script for storing data in the database. You need to put the malware that you want save in this directory.
+<code>save.py</code> Script for storing data in the database. It saves malware from config folder 'to_save_directory'
 
 
 # Usage

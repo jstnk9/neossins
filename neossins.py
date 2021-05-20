@@ -15,6 +15,7 @@ from dash.dependencies import Input, Output
 import plotly.express as px
 import getnetguids
 from argparse import ArgumentParser
+import itertools 
 
 def main():
 	# Default mode = trh hash 
@@ -27,7 +28,8 @@ def main():
 		parser.print_help()
 		exit()
 	
-	process_data(args.mode)
+	#process_data(args.mode)
+	process_data_db(args.mode)
 
 def process_data(mode):
 	
@@ -54,6 +56,48 @@ def process_data(mode):
 			value_list.append(data_dic)			
 
 	get_relations(mode)
+
+def process_data_db(mode):
+
+	conect = database_sqlite.create_connection()
+
+	if mode == "guid":
+		rows = database_sqlite.select_guid_all(conect)
+	elif mode == "trh":
+		pass
+
+	for r in rows:
+		d = {}
+		d["sha256"] = f"{r[1]}"
+		d["guid"] = f"{r[0]}"
+		value_list.append(d)	
+
+	for d in value_list:
+
+		d_hash = '%s'%(d["sha256"])
+
+		d["relations"] = []
+		# paarent project guid
+		d["relations"].append({'data': {'id': '%s'%(d["guid"]), 'label': 'Project ' + '%s'%(d["guid"])[0:4]}})
+
+		d["relations"].append({'data': {'id': d_hash, 'label': d_hash[0:4], 'parent': '%s'%(d["guid"])}, 'classes': 'red'})
+
+		for r in rows:
+			r_hash = f"{r[1]}"
+			r_guid = f"{r[0]}"
+			# avoid comparing with itself
+			if d["sha256"] == r_hash:
+				continue
+
+			if d["guid"] == r_guid:
+				d["relations"].append({'data': {'id': r_hash, 'label': r_hash[0:4], 'parent': '%s'%(d["guid"])}, 'classes': 'red'})
+				#d["relations"].append({'data': {'id': r_hash, 'label': r_hash[0:4]}, 'classes': 'red'})
+				d["relations"].append({'data':{'source': d_hash, 'target': r_hash}})
+
+
+	generate_structure_graph()
+
+
 
 def get_relations(mode):
 	""" get corresponding files from the database """
@@ -89,8 +133,10 @@ def create_graph(gr):
     cyto.Cytoscape(
         id='cytoscape-layout-2',
         elements=gr,
-        layout={'name': 'random'},
-        style={'width': '1500px', 'height': '1900px'},
+        #layout={'name': 'circle', 'radius': 500},
+		layout = {'name':'cose', 'animate':'true'},
+        style={'width': '100%', 'height': '1000px'},
+		
         stylesheet=[
         # Group selectors
 	        {

@@ -45,7 +45,8 @@ def save_data(conn, d):
 	""" Save data into the database"""
 	cur = conn.cursor()
 	try:
-		cur.execute("INSERT INTO data(sha256,detection,typeRefHash, guid) VALUES (?, ?, ?, ?)", (d["sha256"], d["detection"].lower(), d["trh_hash"], d["guid"]))
+		if d["guid"] != "":
+			cur.execute("INSERT INTO data(sha256,detection,typeRefHash, guid) VALUES (?, ?, ?, ?)", (d["sha256"], d["detection"].lower(), d["trh_hash"], d["guid"]))
 	except Error as e:
 		print(e)
 	return cur

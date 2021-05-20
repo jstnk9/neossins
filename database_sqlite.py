@@ -20,7 +20,7 @@ def create_connection():
 def select_trh(conn, search_key):
 	# Get information when match trh
 	cur = conn.cursor()
-	cur.execute("SELECT sha256,detection FROM data WHERE typeRefHash =?", (search_key,))
+	cur.execute("SELECT sha256,detection FROM data WHERE typeRefHash is not \"\" and typeRefHash =?", (search_key,))
 	rows = cur.fetchall()
 
 	return rows
@@ -28,7 +28,14 @@ def select_trh(conn, search_key):
 def select_guid(conn, search_key):
 	# Get information when match trh
 	cur = conn.cursor()
-	cur.execute("SELECT sha256,detection FROM data WHERE guid =?", (search_key,))
+	cur.execute("SELECT sha256,detection FROM data WHERE guid is not \"\" and guid =?", (search_key,))
 	rows = cur.fetchall()
 
+	return rows
+
+def select_guid_all(conn):
+	# Get information when match trh
+	cur = conn.cursor()
+	cur.execute("select guid,sha256 from data where guid is not \"\"")
+	rows = cur.fetchall()
 	return rows

@@ -50,9 +50,9 @@ def get_assembly_guids(assembly_path):
                     txt_start = section.PointerToRawData
                     txt_end = txt_start + section.SizeOfRawData
         except pefile.PEFormatError:
-            return None
+            return b""
         if not is_dot_net_assembly(pe):
-            return None
+            return b""
             
         #Compile TimeDateStamp
         try:
@@ -111,7 +111,7 @@ def get_assembly_guids(assembly_path):
                 try:
                     extracted_mvid = format_guid_from_hex(heaps[b"#GUID"][:16])
                 except:
-                    return {}
+                    return b""
 
                 tilde = heaps[b"#~"]
 
@@ -237,7 +237,7 @@ def get_assembly_guids(assembly_path):
                             if guid_regex.match(data_value):
                                 return data_value.lower()
                         t_offset += row_type_widths[0x0c]
-                    return ""
+                    return b""
             except KeyboardInterrupt:
                 raise
             except:
@@ -245,8 +245,8 @@ def get_assembly_guids(assembly_path):
     except KeyboardInterrupt:
         raise
     except:
-        return {}
-    return {}
+        return b""
+    return b""
 
 
 def get_netguid(file_path):
