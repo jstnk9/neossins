@@ -12,7 +12,7 @@ def create_connection():
 	conn = None
 	try:
 		conn = sqlite3.connect(config["database"]["database_directory"])
-	except Error as e:
+	except Exception as e:
 		print(e)
 
 	return conn
@@ -37,5 +37,12 @@ def select_guid_all(conn):
 	# Get information when match trh
 	cur = conn.cursor()
 	cur.execute("select guid,sha256 from data where guid is not \"\"")
+	rows = cur.fetchall()
+	return rows
+
+def select_trh_all(conn):
+	# Get information when match trh
+	cur = conn.cursor()
+	cur.execute("select typeRefHash,sha256 from data where typeRefHash is not \"\"")
 	rows = cur.fetchall()
 	return rows

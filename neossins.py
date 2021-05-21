@@ -22,14 +22,21 @@ def main():
 	parser = ArgumentParser()
 	parser.add_argument('mode', default="trh", nargs='?', type=str, metavar="mode",
                         help="trh or guid mode")
+	parser.add_argument('-d', '--database', nargs='?', const='y', default='n', help="create graph from database objects")
 	args = parser.parse_args()
 
 	if args.mode != "trh" and args.mode != "guid":
 		parser.print_help()
 		exit()
 	
-	#process_data(args.mode)
-	process_data_db(args.mode)
+	if args.database == 'y':
+		process_data_db(args.mode)
+	elif args.database == 'n':
+		process_data(args.mode)
+	else:
+		parser.print_help()
+		exit()
+	
 
 def process_data(mode):
 	
@@ -63,13 +70,15 @@ def process_data_db(mode):
 
 	if mode == "guid":
 		rows = database_sqlite.select_guid_all(conect)
+		key_val = "guid"
 	elif mode == "trh":
-		pass
+		rows = database_sqlite.select_trh_all(conect)
+		key_val = "typeRefHash"
 
 	for r in rows:
 		d = {}
 		d["sha256"] = f"{r[1]}"
-		d["guid"] = f"{r[0]}"
+		d[key_val] = f"{r[0]}"
 		value_list.append(d)	
 
 	for d in value_list:
@@ -78,19 +87,19 @@ def process_data_db(mode):
 
 		d["relations"] = []
 		# paarent project guid
-		d["relations"].append({'data': {'id': '%s'%(d["guid"]), 'label': 'Project ' + '%s'%(d["guid"])[0:4]}})
+		d["relations"].append({'data': {'id': d[key_val], 'label': 'Project ' + d[key_val][0:4]}})
 
-		d["relations"].append({'data': {'id': d_hash, 'label': d_hash[0:4], 'parent': '%s'%(d["guid"])}, 'classes': 'red'})
+		d["relations"].append({'data': {'id': d_hash, 'label': d_hash[0:4], 'parent': d[key_val]}, 'classes': 'red'})
 
 		for r in rows:
 			r_hash = f"{r[1]}"
-			r_guid = f"{r[0]}"
+			r_val = f"{r[0]}"
 			# avoid comparing with itself
 			if d["sha256"] == r_hash:
 				continue
-
-			if d["guid"] == r_guid:
-				d["relations"].append({'data': {'id': r_hash, 'label': r_hash[0:4], 'parent': '%s'%(d["guid"])}, 'classes': 'red'})
+			
+			if d[key_val] == r_val:
+				d["relations"].append({'data': {'id': r_hash, 'label': r_hash[0:4], 'parent': d[key_val]}, 'classes': 'red'})
 				#d["relations"].append({'data': {'id': r_hash, 'label': r_hash[0:4]}, 'classes': 'red'})
 				d["relations"].append({'data':{'source': d_hash, 'target': r_hash}})
 
@@ -103,6 +112,7 @@ def get_relations(mode):
 	""" get corresponding files from the database """
 	conect = database_sqlite.create_connection()
 	for d in value_list:
+		d_hash = '%s'%(d["sha256"])
 		if mode == "guid":
 			rows = database_sqlite.select_guid(conect, d["guid"])
 		elif mode == "trh":
@@ -110,7 +120,7 @@ def get_relations(mode):
 		
 
 		d["relations"] = []
-		d["relations"].append({'data': {'id': '%s'%(d["sha256"]), 'label': '%s'%(d["sha256"])}, 'classes': 'red'})
+		d["relations"].append({'data': {'id': d_hash[0:4], 'label': d_hash[0:4]}, 'classes': 'red'})
 		for r in rows:
 			d["relations"].append({'data': {'id': '%s'%(r[0]), 'label': '%s'%(r[0])}, 'classes': 'pink'})
 			d["relations"].append({'data': {'id': '%s'%(r[1]), 'label': '%s'%(r[1])}, 'classes': 'blue'})
