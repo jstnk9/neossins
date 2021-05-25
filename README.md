@@ -74,6 +74,11 @@ Open a web browser and go to http://<configured_ip>:8050/.
 ```
 python save.py -f asyncrat
 ```
+4. If you want to build graph only between samples in database
+
+```
+python neossins.py -d
+```
 
 # Examples
 <h3>Scenario</h3>
