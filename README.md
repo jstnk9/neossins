@@ -1,11 +1,12 @@
 # Neossins
-Neossins is an application based on TypeRef Hasher that belongs to G Data Cyberdefense. Only works with malware samples compiled in .NET.
+Neossins is an application based on TypeRef Hasher that belongs to G Data Cyberdefense and on GetNETGUIDs that belongs to Cylance. Only works with malware samples compiled in .NET.
 
 This project aims to identify similarity between malware samples stored in the database. It is important to enrich the database with as many samples as possible to obtain better results.
 
 Explanation: https://joseliyo-jstnk.medium.com/typeref-hasher-the-imphash-solution-for-samples-in-net-9aad14502bbf
 
 TypeRef Hasher tool: hxxps://github.com/GDATASoftwareAG/TypeRefHasher
+GetNETGUIDs tool: https://github.com/cylance/GetNETGUIDs
 
 # Installation
 This tool is developed in Python3.
@@ -39,7 +40,7 @@ The files that you can find in the repository are the following:
 
 <code>Directory malware</code> Contains malware samples. DO NOT RUN IN UNCONTROLLED ENVIRONMENTS.
 
-<code>Directory to_save</code> Has a script for storing data in the database. You need to put the malware that you want save in this directory.
+<code>save.py</code> Script for storing data in the database. It saves malware from config folder 'to_save_directory'
 
 
 # Usage
@@ -72,6 +73,11 @@ Open a web browser and go to http://<configured_ip>:8050/.
 3. if you want to store malware samples together with their HRT in the database, put the samples in the to_save directory and run the script with the -f parameter indicating the name of the family the samples belong to.
 ```
 python save.py -f asyncrat
+```
+4. If you want to build graph only between samples in database
+
+```
+python neossins.py -d
 ```
 
 # Examples
